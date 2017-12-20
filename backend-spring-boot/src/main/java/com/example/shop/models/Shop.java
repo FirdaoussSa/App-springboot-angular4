@@ -18,7 +18,7 @@ public class Shop {
 	 
 	public Shop() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	public Shop(String name, String email, String city, Location location) {
 		super();
