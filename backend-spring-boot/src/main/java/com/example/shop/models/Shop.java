@@ -14,7 +14,7 @@ public class Shop {
 	 private String email;
 	 private String city;
 	 private Location location;
-	// private String picture;
+
 	 
 	public Shop() {
 		super();
