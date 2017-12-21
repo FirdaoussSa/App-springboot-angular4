@@ -7,6 +7,6 @@ Technologies used :
 
 Java/Spring :
 
-  Backend  : Spring Boot
-  Frontend : Angular 4 
+  Backend  : Spring Boot /
+  Frontend : Angular 4 /
   Database : MongoDB
