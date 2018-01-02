@@ -17,16 +17,16 @@ import com.example.shop.models.Shop;;
 public class ShopController {
 
 	 @Autowired
-	    ShopRepository ShopRepository;
+	    ShopRepository shopRepository;
 	
 	  @GetMapping("/shops")
 	    public List<Shop> getAllShops() {
-	        return ShopRepository.findAll();
+	        return shopRepository.findAll();
 	    }
 
 	  @GetMapping("/shops/{id}")
 	    public Shop findById(@PathVariable String id) {
-	        return ShopRepository.findOne(id);
+	        return shopRepository.findOne(id);
 	    }
 
 }

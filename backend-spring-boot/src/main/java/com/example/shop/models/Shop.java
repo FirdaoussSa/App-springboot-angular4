@@ -13,21 +13,26 @@ public class Shop {
 	 private String name;
 	 private String email;
 	 private String city;
+	 private String picture;
 	 private Location location;
-
+	 
 	 
 	public Shop() {
 		super();
 		
 	}
-	public Shop(String name, String email, String city, Location location) {
+	
+	
+	public Shop(String name, String email, String city, String picture, Location location) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.city = city;
+		this.picture = picture;
 		this.location = location;
 	}
-	
+
+
 	public String getId() {
 		return id;
 	}
@@ -52,6 +57,17 @@ public class Shop {
 	public void setCity(String city) {
 		this.city = city;
 	}
+	
+	public String getPicture() {
+		return picture;
+	}
+
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+
 	public Location getLocation() {
 		return location;
 	}
