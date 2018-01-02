@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  idUser:string="";
+
+  
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.route.params.subscribe(params => {
+      console.log(params);
+      this.idUser=params['id'];
+      console.log(+params['id']);
+   }); 
+   console.log(this.idUser);
+   
   }
 
 }

@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
+import { HttpModule} from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -9,13 +10,20 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ShopComponent } from './shop/shop.component';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { LoginComponent } from './login/login.component';
+import{UserService}from './service/user.service';
+import{AuthguardGuard}from './service/authguard.guard';
+import { FormsModule } from '@angular/forms';
+import{AuthenticationService}from'./service/authentication.service';
+import { PrefferedShopComponent } from './preffered-shop/preffered-shop.component';
 
 const routes: Routes = [
   
-  { path: '', component:HomeComponent},
-  { path: 'shop', component:ShopComponent},
-  { path: '**', component:NotfoundComponent},
-  { path: 'shop/:idShop', component:HomeComponent}
+  { path: '', component:LoginComponent},
+  { path: 'shop',canActivate:[AuthguardGuard] , component:ShopComponent},
+  { path: 'shop/:id', canActivate:[AuthguardGuard],component:ShopComponent},
+  { path: 'preffered/:id', canActivate:[AuthguardGuard],component:PrefferedShopComponent},
+  { path: '**', component:NotfoundComponent}
   
 ];
 
@@ -26,13 +34,15 @@ const routes: Routes = [
     SidebarComponent,
     ShopComponent,
     HomeComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    LoginComponent,
+    PrefferedShopComponent
   ],
   imports: [
     BrowserModule,RouterModule.forRoot(routes),
-    HttpModule
+    HttpModule,FormsModule,HttpClientModule
   ],
-  providers: [],
+  providers: [UserService,AuthguardGuard,AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

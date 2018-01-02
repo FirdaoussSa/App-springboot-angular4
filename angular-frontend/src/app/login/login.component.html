@@ -1,0 +1,24 @@
+<form role="form" novalidate>
+  <div class="col-md-4 col-md-offset-4">
+    <fieldset class="panel panel-info">
+      <div class="panel-body">
+            <div  class="form-group " >
+              <h2>Login</h2>
+            </div>
+            <div  class="form-group " >
+                <label for="exampleFormControlInput1" >Email</label>
+                <input class="form-control" type="text" [(ngModel)]="userM.email" required name="email"  placeholder="name@example.com">
+            </div>
+            <div  class="form-group ">
+                <label for="exampleFormControlInput1">Password</label>
+                <input class="form-control" type="password"  [(ngModel)]="userM.password" required name="password"  placeholder="password">
+            </div>
+            <div class="form-inline">
+                <button class="btn btn-primary" (click)="login()">Login</button>
+                <button class="btn btn-light" (click)="saveUser()">Sign up</button>
+
+            </div>
+      </div>        
+    </fieldset>
+  </div>
+</form>

@@ -3,10 +3,14 @@
 <div class="row">
   <div class="col-lg-6">
 
-    <a [routerLink]="['/shop']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-        <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'Shop' }}
+    <a [routerLink]="['/shop',idUser]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'Nearby Shop' }}
 
-      </a>
+    </a>
+    <a [routerLink]="['/preffered',idUser]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'My preferred Shop' }}
+
+  </a>
   </div>
   
 </div>
