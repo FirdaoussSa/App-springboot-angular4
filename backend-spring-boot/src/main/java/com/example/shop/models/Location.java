@@ -11,6 +11,10 @@ public class Location {
 		this.coordinates = coordinates;
 	}
 
+	public Location() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getType() {
 		return type;
 	}

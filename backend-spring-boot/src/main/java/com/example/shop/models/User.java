@@ -15,19 +15,24 @@ public class User {
 	private String email;
 	private String password;
 	private List<Shop> prefferedShop=new ArrayList<Shop>();
+	private List<Shop> dislikedShop=new ArrayList<Shop>();
+
 	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(String email, String password,List<Shop> prefferedShop) {
+	
+	public User(String email, String password, List<Shop> prefferedShop, List<Shop> dislikedShop) {
 		super();
 		this.email = email;
 		this.password = password;
-		this.prefferedShop=prefferedShop;
+		this.prefferedShop = prefferedShop;
+		this.dislikedShop = dislikedShop;
 	}
-	
+
+
 	public List<Shop> getPrefferedShop() {
 		return prefferedShop;
 	}
@@ -35,6 +40,17 @@ public class User {
 	public void setPrefferedShop(List<Shop> prefferedShop) {
 		this.prefferedShop = prefferedShop;
 	}
+	
+
+	public List<Shop> getDislikedShop() {
+		return dislikedShop;
+	}
+
+
+	public void setDislikedShop(List<Shop> dislikedShop) {
+		this.dislikedShop = dislikedShop;
+	}
+
 
 	public String getId() {
 		return id;
@@ -54,6 +70,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	
 	
 }

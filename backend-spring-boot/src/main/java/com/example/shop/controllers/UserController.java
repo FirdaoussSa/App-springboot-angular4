@@ -38,20 +38,23 @@ public class UserController {
 	    public User findById(@PathVariable String id) {
 	        return userRepository.findOne(id);
 	    }
-	 @PostMapping("/users")
+	  
+	  @PostMapping("/users")
 	    public User createUser(@Valid @RequestBody User user) {
-	       
-		    String email=user.getEmail();
-		    
-		    User userF=userRepository.findByEmail(email);
-		    if(userF==null) {
-		    	    System.out.println("saved");
-		    	    return userRepository.save(user);
+	        
+		    if(!user.getEmail().equals("") && !user.getPassword().equals(""))
+		    {
+		    		String email=user.getEmail();
+		    		User userF=userRepository.findByEmail(email);
+		    		if(userF==null) {
+		    			System.out.println("saved");
+		    			return userRepository.save(user);
+		    		}
 		    }
     	    		return new User();
-	 }
+	  	}
 	 
-	 @PostMapping("/login")
+	  @PostMapping("/login")
 	    public User findUserByEmail(@Valid @RequestBody User user) {
 	        
 		    String email=user.getEmail();
@@ -63,21 +66,75 @@ public class UserController {
 		    }
 		    	return new User();
 
-	 }
+	  	}
 	 
 
 	  @GetMapping("/PrefferedShop/{idUser}/{idShop}")
 	    public User addPrefferedShopToUser(@PathVariable String idUser,@PathVariable String idShop) {
+		  
 		  Shop shop=shopRepository.findOne(idShop);
 		  User userF=userRepository.findOne(idUser);
-		  userF.getPrefferedShop().add(shop);
+		  if(this.shopIsHere(idUser, idShop))
+			  System.out.println("dejaa here");
+		  else {
+			  userF.getPrefferedShop().add(shop);
+		  }
+		  
+		 
 		  return userRepository.save(userF);
 	    }
+	  
+	  @GetMapping("/RemovePrefferedShop/{idUser}/{idShop}")
+	    public User removePrefferedShopFromUser(@PathVariable String idUser,@PathVariable String idShop) {
+		  Shop shop=shopRepository.findOne(idShop);
+		  User userF=userRepository.findOne(idUser);
+		  
+		  List<Shop> prefferedShop=new ArrayList<Shop>();
+		  for (Shop s: userF.getPrefferedShop()){
+			  if(!s.getId().equals(idShop))
+				  prefferedShop.add(s);
+		  }
+		  userF.setPrefferedShop(prefferedShop);
+		  return userRepository.save(userF);
+	    }
+	  
 	  @GetMapping("/PrefferedShop/{idUser}")
 	    public List<Shop> getAllPrefShop(@PathVariable String idUser) {
 		  User userF=userRepository.findOne(idUser);
 		  return userF.getPrefferedShop();
-	 }
+	  	}
+	  
+
+	  @GetMapping("/DislikedShop/{idUser}/{idShop}")
+	    public User dislikeShop(@PathVariable String idUser,@PathVariable String idShop) {
+		  
+		  Shop shop=shopRepository.findOne(idShop);
+		  User userF=userRepository.findOne(idUser);
+		  userF.getDislikedShop().add(shop);
+		  
+		  return userRepository.save(userF);
+	    }
+	  
+	  @GetMapping("/DislikedShop/{idUser}")
+	    public List<Shop> getAllDislikedShop(@PathVariable String idUser) {
+		  User userF=userRepository.findOne(idUser);
+		  return userF.getDislikedShop();
+	  	}
+	  
+	  public boolean shopIsHere(String idUser,String idShop) {
+		  
+		  Shop shop=shopRepository.findOne(idShop);
+		  User userF=userRepository.findOne(idUser);
+		  for (Shop s: userF.getPrefferedShop()){
+			  if(s.getId().equals(shop.getId()))
+				  {
+				  	return true;
+				  }
+		  }
+		  return false;
+	  }
+	  
 	 
+	  
 }
 
