@@ -21,7 +21,6 @@ export class SidebarComponent implements OnInit {
       this.idUser=params['id'];
       console.log(+params['id']);
    }); 
-   console.log(this.idUser);
    
   }
 

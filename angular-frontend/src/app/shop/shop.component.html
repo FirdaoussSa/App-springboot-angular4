@@ -5,6 +5,7 @@
     <ul>
         <li  *ngFor="let s of pageShop" >
           <fieldset class="panel panel-success">
+           
             <div class="panel-body">
               <p>{{s.name}}</p>
               <img width="150" height="150" src="{{s.picture}}" class="tn">
@@ -13,6 +14,7 @@
                 <button class="btn btn-success" (click)="likeShop(s.id)">Like</button>
               </p>
             </div>
+          
           </fieldset>
         </li>
         

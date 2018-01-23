@@ -20,31 +20,22 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   pageSalle:any;
   test:User=new User();
- 
+  location = {};
+
   constructor( private route: ActivatedRoute,private router :Router,private user:UserService,private http:Http,
       private authenticationService: AuthenticationService  ) { }
 
   ngOnInit() {
-    //this.authenticationService.logout();
-    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
+    
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(position => {
+        this.location = position.coords;
+        console.log(position.coords); 
+      });
+   }
    
   }
 
-  /*loginUser(e){
-    e.preventDefault();
-    console.log(e);
-    var email=e.target.elements[0].value;
-    var password=e.target.elements[1].value;
-    
-    console.log(email,password);
-    if(email=='admin'&& password=='admin')
-    {
-      this.user.setUserLoggedIn();
-      this.router.navigate(['shop']);
-    }
-    return false;
-  }*/
   saveUser(userM:User){
 
     var myObj = { "email":this.userM.email,"password":this.userM.password};
@@ -71,20 +62,7 @@ export class LoginComponent implements OnInit {
   } 
 
   login(userM:User) {
-   /* this.loading = true;
-
-    this.authenticationService.login(this.userM.email, this.userM.password)
-        .subscribe(
-            data => {
-              this.router.navigate([this.returnUrl]);
-            },
-            error => {
-                //this.alertService.error(error);
-                this.loading = false;
-            });
-            
-    */  
-    
+   
     var myObj = { "email":this.userM.email,"password":this.userM.password};
     console.log(myObj);
     this.http.post("http://localhost:8080/api/login", JSON.stringify(myObj), this.options)

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-//import { Shop } from '../../module/Shop';
 import { Http } from '@angular/http';
-import "rxjs/add/operator/map";
 import { UserService } from '../service/user.service';
 import { Shop } from '../../module/Shop';
 import { ActivatedRoute } from '@angular/router';
+import { Locations } from '../../module/Locations';
+import{RequestOptions,Headers,ResponseContentType,Response}from '@angular/http';
+import "rxjs/add/operator/map";
 
 @Component({
   selector: 'app-shop',
@@ -13,46 +14,79 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ShopComponent implements OnInit {
 
+  private headers=new Headers({'Content-Type':'application/json'});
+  private options =new RequestOptions({headers:this.headers});
   pageShop:any;
-  //s:Shop=new Shop();
   idUser:string="";
-  constructor(private http:Http,private user:UserService,private route: ActivatedRoute) { }
+  location = new  Locations();
+  
+  
+  constructor(private http:Http,private user:UserService,private route: ActivatedRoute) {
+   
+   }
 
   ngOnInit() {
     
-    this.http.get("http://localhost:8080/api/shops")
-    .map(resp=>resp.json())
-    .subscribe(data=>{
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(position => {
+       
+        var myObj = { "latitude":position.coords.latitude,"longitude":position.coords.longitude};
+        console.log(myObj);
+
+        this.http.post("http://localhost:8080/api/shops", JSON.stringify(myObj), this.options)
+        .map(resp=>resp.json())
+        .subscribe(data=>{
         this.pageShop=data;
-        console.log(this.pageShop);
-     },err=>{ console.log(err);
+      
+        },err=>{ console.log(err);
     
-    }); 
+        }); 
+   
+        console.log(position.coords); 
+      });
+    }
+    
+   
    
   }
 
   likeShop(idShop:Shop){
-    console.log(idShop);
-    console.log("hehoo");
-
+    
+    //get the user id from the url 
     this.route.params.subscribe(params => {
-      console.log(params);
+      
       this.idUser=params['id'];
-      console.log(+params['id']);
+      
    }); 
-   console.log(this.idUser);
+   
    
     this.http.get("http://localhost:8080/api/PrefferedShop/"+this.idUser+"/"+idShop)
     .map(resp=>resp.json())
     .subscribe(data=>{
-       // this.pageShop=data;
-        //console.log(this.pageShop);
      },err=>{ console.log(err);
     
     }); 
    
    
    
+  }
+
+  dislikeShop(idShop:Shop){
+    
+    
+  
+    this.route.params.subscribe(params => {
+   
+      this.idUser=params['id'];
+      
+    }); 
+   console.log(this.idUser);
+    this.http.get("http://localhost:8080/api/DislikedShop/"+this.idUser+"/"+idShop)
+    .map(resp=>resp.json())
+    .subscribe(data=>{
+     },err=>{ console.log(err);
+    
+    });
   }
 
 }
